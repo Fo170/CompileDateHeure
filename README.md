@@ -48,7 +48,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps =
-    https://github.com/Fo170/CompileDateHeure/archive/refs/heads/main.zip
+    https://github.com/Fo170/CompileDateHeure.git@^1.0.0
 ```
 
 Ou dans un projet local, placez le dossier `CompileDateHeure/` dans `lib/`.
