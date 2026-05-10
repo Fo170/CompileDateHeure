@@ -1,0 +1,14 @@
+# Arduino build artifacts
+build/
+pio/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Fichiers d'instructions locaux — JAMAIS synchroniser sur GitHub
+AGENTS.md
+CLAUDE.md
+copilot-instructions.md

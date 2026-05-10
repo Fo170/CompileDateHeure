@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="800" height="520" fill="#f8f9fa" rx="8"/>
+
+  <!-- Titre -->
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Architecture — CompileDateHeure v1.0.0</text>
+  <line x1="100" y1="45" x2="700" y2="45" stroke="#bdc3c7" stroke-width="1"/>
+
+  <!-- Bloc : Votre Sketch -->
+  <rect x="260" y="70" width="280" height="60" rx="6" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+  <text x="400" y="95" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">Votre Sketch Arduino</text>
+  <text x="400" y="112" text-anchor="middle" font-size="11" fill="#d5e8f7">#include &lt;CompileDateHeure.h&gt;</text>
+
+  <!-- Bloc : CompileDateHeure.h -->
+  <rect x="120" y="190" width="560" height="80" rx="6" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <text x="400" y="215" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">CompileDateHeure.h</text>
+  <text x="400" y="238" text-anchor="middle" font-size="11" fill="#eafaf1">__DATE__  →  "Mmm dd yyyy"    __TIME__  →  "hh:mm:ss"</text>
+
+  <!-- Flèche Sketch → Header -->
+  <polyline points="400,130 400,170" fill="none" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Bloc : Macros de format -->
+  <rect x="20" y="310" width="180" height="70" rx="6" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
+  <text x="110" y="335" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">Macros Format</text>
+  <text x="110" y="355" text-anchor="middle" font-size="10" fill="#fef5e7">FORMAT_DATE_NUMERIQUE  = 0</text>
+  <text x="110" y="370" text-anchor="middle" font-size="10" fill="#fef5e7">FORMAT_DATE_TEXTE_EN   = 1</text>
+  <text x="110" y="385" text-anchor="middle" font-size="10" fill="#fef5e7">FORMAT_DATE_TEXTE_FR   = 2</text>
+
+  <!-- Bloc : Tableaux mois -->
+  <rect x="220" y="310" width="360" height="70" rx="6" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+  <text x="400" y="335" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">Tableaux de mois</text>
+  <text x="400" y="355" text-anchor="middle" font-size="10" fill="#f4ecf7">MOIS_EN[12] — index 0=Jan</text>
+  <text x="400" y="370" text-anchor="middle" font-size="10" fill="#f4ecf7">MOIS_FR[12] — index 0=Jan</text>
+
+  <!-- Bloc : sorties -->
+  <rect x="610" y="310" width="170" height="70" rx="6" fill="#1abc9c" stroke="#16a085" stroke-width="2"/>
+  <text x="695" y="335" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">Sorties</text>
+  <text x="695" y="355" text-anchor="middle" font-size="10" fill="#eafaf1">getBuildDate(format)</text>
+  <text x="695" y="370" text-anchor="middle" font-size="10" fill="#eafaf1">printCompileDate()</text>
+  <text x="695" y="385" text-anchor="middle" font-size="10" fill="#eafaf1">initVersionCompilation()</text>
+
+  <!-- Flèches Header → blocs -->
+  <polyline points="250,270 110,310" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <polyline points="490,270 390,310" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <polyline points="580,270 695,310" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Flèches macros → Header -->
+  <polyline points="110,310 200,230" fill="none" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <polyline points="290,310 400,230" fill="none" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+
+  <!-- Flèche Format → Sortie -->
+  <polyline points="110,380 530,380 610,350" fill="none" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+
+  <!-- Bloc résultat Serial -->
+  <rect x="200" y="430" width="400" height="70" rx="6" fill="#ecf0f1" stroke="#95a5a6" stroke-width="2"/>
+  <text x="400" y="452" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Résultat sur Serial (exemple)</text>
+  <text x="400" y="470" text-anchor="middle" font-size="10" fill="#7f8c8d">Compile : 10/05/2026 — 22:47:00</text>
+  <text x="400" y="487" text-anchor="middle" font-size="10" fill="#7f8c8d">Version  : 10/05/2026-22:47:00</text>
+
+  <!-- Flèche Sorties → Résultat -->
+  <polyline points="695,380 695,430" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <polyline points="695,430 600,465" fill="none" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="6,3"/>
+
+  <!-- Flèche vers bas : header → résultat -->
+  <polyline points="400,270 400,430" fill="none" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+
+  <!-- Flèche cachée pour référence vers le bas -->
+  <polyline points="310,380 310,430" fill="none" stroke="transparent" stroke-width="1"/>
+
+  <!-- Définition marqueur flèche -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <polyline points="0,0 10,5 0,10" fill="none" stroke="#7f8c8d" stroke-width="1.5"/>
+    </marker>
+  </defs>
+</svg>

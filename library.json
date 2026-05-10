@@ -1,0 +1,32 @@
+{
+    "name": "CompileDateHeure",
+    "version": "1.0.0",
+    "description": "A simple Arduino library to print the compile date and time. Supports ESP8266, ESP32 and other boards.",
+    "keywords": "arduino, compile, date, time, serial, esp8266, esp32",
+    "authors": [
+        {
+            "name": "Olivier Fournet",
+            "email": "olivier.fournet@free.fr",
+            "url": "https://github.com/Fo170"
+        }
+    ],
+    "maintainers": [
+        {
+            "name": "Olivier Fournet",
+            "email": "olivier.fournet@free.fr"
+        }
+    ],
+    "license": "GNU GPLv3",
+    "homepage": "https://github.com/Fo170/CompileDateHeure",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Fo170/CompileDateHeure.git"
+    },
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif8266",
+        "espressif32",
+        "atmelavr"
+    ],
+    "headers": "CompileDateHeure.h"
+}

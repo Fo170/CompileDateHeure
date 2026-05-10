@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380">
+  <defs>
+    <style>
+      text { font-family: 'Courier New', Courier, monospace; }
+    </style>
+  </defs>
+
+  <!-- Fond terminal -->
+  <rect width="800" height="380" fill="#1e1e1e" rx="8"/>
+
+  <!-- Barre de titre terminal -->
+  <rect width="800" height="28" rx="8" ry="8" fill="#333333"/>
+  <circle cx="15" cy="14" r="6" fill="#ff5f56"/>
+  <circle cx="35" cy="14" r="6" fill="#febc2e"/>
+  <circle cx="55" cy="14" r="6" fill="#27c840"/>
+  <text x="760" y="19" text-anchor="end" font-size="11" fill="#aaaaaa">bash — 9600 baud</text>
+
+  <!-- Lignes de sortie -->
+  <text x="20" y="55"  font-size="13" fill="#4ec9b0">========================================</text>
+  <text x="20" y="78"  font-size="13" fill="#dcdcaa">   Compile Date &amp; Time</text>
+  <text x="20" y="101" font-size="13" fill="#4ec9b0">========================================</text>
+
+  <text x="20" y="130" font-size="13" fill="#9cdcfe">  Date :</text>
+  <text x="120" y="130" font-size="13" fill="#ce9178">10/05/2026</text>
+
+  <text x="20" y="153" font-size="13" fill="#9cdcfe">  Time :</text>
+  <text x="120" y="153" font-size="13" fill="#ce9178">22:47:00</text>
+
+  <text x="20" y="182" font-size="13" fill="#9cdcfe">  Version :</text>
+  <text x="120" y="182" font-size="13" fill="#ce9178">10/05/2026-22:47:00</text>
+
+  <text x="20" y="211" font-size="13" fill="#4ec9b0">========================================</text>
+
+  <!-- Format texte EN -->
+  <text x="20" y="246" font-size="12" fill="#6a9955">// FORMAT_DATE_TEXTE_EN</text>
+  <text x="20" y="269" font-size="13" fill="#9cdcfe">  Date :</text>
+  <text x="120" y="269" font-size="13" fill="#ce9178">10/May/2026</text>
+
+  <!-- Format texte FR -->
+  <text x="20" y="294" font-size="12" fill="#6a9955">// FORMAT_DATE_TEXTE_FR</text>
+  <text x="20" y="317" font-size="13" fill="#9cdcfe">  Date :</text>
+  <text x="120" y="317" font-size="13" fill="#ce9178">10/Mai/2026</text>
+</svg>
