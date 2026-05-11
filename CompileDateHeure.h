@@ -3,7 +3,7 @@
 // Auteur  : FOURNIT Olivier
 // Email   : olivier.fournet@free.fr
 // GitHub  : https://github.com/Fo170/CompileDateHeure
-// Date    : 2025
+// Date    : 2026-05-11
 //
 // Licence : GNU General Public License v3.0
 //
@@ -14,7 +14,8 @@
 //   #include <CompileDateHeure.h>
 //   void setup() {
 //       Serial.begin(9600);
-//       printCompileDate();
+//       initVersionCompilation(FORMAT_DATE_NUMERIQUE);
+//       Serial.println(s_versionCompilation);
 //   }
 
 #ifndef COMPILE_DATE_HEURE_H
@@ -27,7 +28,7 @@ const char* COMPILE_DATE = __DATE__;  // Format : "Mmm dd yyyy" (ex: "May 10 202
 const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
 
 // ----- N° de version -----
-#define COMPILE_DATE_HEURE_VERSION "1.0.0"
+#define COMPILE_DATE_HEURE_VERSION "1.0.1"
 
 // ----- Constantes de format -----
 #define FORMAT_DATE_NUMERIQUE     0  // "dd/mm/yyyy"
@@ -92,17 +93,9 @@ inline void initVersionCompilation(int format = FORMAT_DATE_NUMERIQUE) {
 }
 
 // ----- Afficher la date et l'heure de compilation sur Serial -----
-inline void printCompileDate() {
-    Serial.println("========================================");
-    Serial.println("   Compile Date & Time");
-    Serial.println("========================================");
-    Serial.print("  Date : ");
-    Serial.println(getBuildDate(FORMAT_DATE_NUMERIQUE));
-    Serial.print("  Time : ");
-    Serial.println(COMPILE_TIME);
-    Serial.print("  Version Compilation : ");
-    Serial.println(s_versionCompilation);
-    Serial.println("========================================");
-}
+// Utilisez getBuildDate() et initVersionCompilation() à la place
+// Fonction supprimée à partir de la v1.0.1 — utiliser :
+//   initVersionCompilation(FORMAT_DATE_NUMERIQUE);
+//   Serial.println(s_versionCompilation);
 
 #endif // COMPILE_DATE_HEURE_H

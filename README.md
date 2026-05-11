@@ -7,7 +7,7 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/Fo170/CompileDateHeure)
 
 **Auteur :** FOURNET Olivier — olivier.fournet@free.fr  
-**Version :** 1.0.0  
+**Version :** 1.0.1  
 **Licence :** GNU General Public License v3.0
 
 ---
@@ -48,7 +48,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps =
-    https://github.com/Fo170/CompileDateHeure.git@^1.0.0
+    https://github.com/Fo170/CompileDateHeure.git@^1.0.1
 ```
 
 Ou dans un projet local, placez le dossier `CompileDateHeure/` dans `lib/`.
@@ -61,8 +61,9 @@ Ou dans un projet local, placez le dossier `CompileDateHeure/` dans `lib/`.
 #include <CompileDateHeure.h>
 
 void setup() {
+    initVersionCompilation(FORMAT_DATE_NUMERIQUE);
     Serial.begin(9600);
-    printCompileDate();
+    Serial.println(s_versionCompilation);
 }
 
 void loop() {
@@ -98,7 +99,7 @@ Initialise la variable globale `s_versionCompilation` avec la date et l'heure au
 ```cpp
 initVersionCompilation(FORMAT_DATE_NUMERIQUE);
 Serial.println(s_versionCompilation);
-// → 10/05/2026-22:47:00
+// → 11/05/2026-18:00:00
 ```
 
 ---
@@ -122,8 +123,10 @@ void setup() {
     Serial.begin(9600);
     delay(1000);
 
-    // Affichage simple
-    printCompileDate();
+    // Variable de version
+    initVersionCompilation(FORMAT_DATE_NUMERIQUE);
+    Serial.print("Version : ");
+    Serial.println(s_versionCompilation);
 
     // Format texte anglais
     Serial.print("EN : ");
@@ -132,11 +135,6 @@ void setup() {
     // Format texte français
     Serial.print("FR : ");
     Serial.println(getBuildDate(FORMAT_DATE_TEXTE_FR));
-
-    // Variable de version
-    initVersionCompilation(FORMAT_DATE_NUMERIQUE);
-    Serial.print("Version : ");
-    Serial.println(s_versionCompilation);
 }
 
 void loop() {
@@ -153,7 +151,7 @@ Le schéma ci-dessus montre le flux :
 
 1. Le **preprocesseur C/C++** injecte automatiquement `__DATE__` et `__TIME__` à la compilation
 2. `CompileDateHeure.h` convertit ces macros en chaînes formatées via `getBuildDate()`
-3. `printCompileDate()` et `s_versionCompilation` utilisent ces valeurs pour l'affichage
+3. la variable : `s_versionCompilation` , les applications peuvent utiliser cette valeurs pour l'affichage
 
 ---
 
@@ -177,4 +175,4 @@ Voir le fichier [LICENSE](LICENSE) pour les détails complets.
 
 ---
 
-*Dernière mise à jour : 2026-05-10*
+*Dernière mise à jour : 2026-05-11*

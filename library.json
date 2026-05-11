@@ -1,6 +1,6 @@
 {
     "name": "CompileDateHeure",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple Arduino library to print the compile date and time. Supports ESP8266, ESP32 and other boards.",
     "keywords": "arduino, compile, date, time, serial, esp8266, esp32",
     "authors": [
