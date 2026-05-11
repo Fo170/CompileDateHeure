@@ -1,6 +1,6 @@
 // CompileDateHeure.h
-// Version : 1.0.0
-// Auteur  : FOURNIT Olivier
+// Version : 1.0.1
+// Auteur  : FOURNET Olivier
 // Email   : olivier.fournet@free.fr
 // GitHub  : https://github.com/Fo170/CompileDateHeure
 // Date    : 2026-05-11
