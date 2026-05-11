@@ -74,14 +74,6 @@ void loop() {
 
 ## Fonctions de l'API
 
-### `printCompileDate()`
-
-Affiche la date, l'heure et la version de compilation sur le port série.
-
-**Sortie exemple :**
-
-![Sortie série](svg/example-output.svg)
-
 ### `getBuildDate(int format)`
 
 Retourne un `String` contenant la date formatée.
