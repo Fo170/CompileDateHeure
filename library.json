@@ -16,7 +16,7 @@
             "email": "olivier.fournet@free.fr"
         }
     ],
-    "license": "GNU GPLv3",
+    "license": "GPL-3.0-only",
     "homepage": "https://github.com/Fo170/CompileDateHeure",
     "repository": {
         "type": "git",

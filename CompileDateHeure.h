@@ -39,7 +39,7 @@ const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
 const char* MOIS_EN[12] = {"Jan","Feb","Mar","Apr","May","Jun",
                             "Jul","Aug","Sep","Oct","Nov","Dec"};
 const char* MOIS_FR[12] = {"Jan","Fév","Mar","Avr","Mai","Jui",
-                            "Jui","Aoû","Sep","Oct","Nov","Déc"};
+                            "Jui","Août","Sep","Oct","Nov","Déc"};
 
 // ----- Chaîne de version globale -----
 String s_versionCompilation;
@@ -88,8 +88,9 @@ inline String getBuildDate(int format = FORMAT_DATE_NUMERIQUE) {
 }
 
 // ----- Initialiser la chaîne de version : "dd/mm/yyyy-hh:mm:ss" -----
-inline void initVersionCompilation(int format = FORMAT_DATE_NUMERIQUE) {
+inline String initVersionCompilation(int format = FORMAT_DATE_NUMERIQUE) {
     s_versionCompilation = getBuildDate(format) + "-" + String(COMPILE_TIME);
+  return s_versionCompilation;
 }
 
 // ----- Afficher la date et l'heure de compilation sur Serial -----
