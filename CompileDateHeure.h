@@ -21,6 +21,9 @@
 #ifndef COMPILE_DATE_HEURE_H
 #define COMPILE_DATE_HEURE_H
 
+
+// Version de la librairie (source UNIQUE — agrégée par liste_lib.h)
+#define __COMPILEDATEHEURE_H_VERSION__ "1.0.1"
 #include <Arduino.h>
 
 // ----- Données de compilation -----
@@ -28,7 +31,7 @@ const char* COMPILE_DATE = __DATE__;  // Format : "Mmm dd yyyy" (ex: "May 10 202
 const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
 
 // ----- N° de version -----
-#define COMPILE_DATE_HEURE_VERSION "1.0.1"
+//#define COMPILE_DATE_HEURE_VERSION "1.0.1"
 
 // ----- Constantes de format -----
 #define FORMAT_DATE_NUMERIQUE     0  // "dd/mm/yyyy"
