@@ -23,7 +23,7 @@
 
 
 // Version de la librairie (source UNIQUE — agrégée par liste_lib.h)
-#define __COMPILEDATEHEURE_H_VERSION__ "1.0.1"
+#define __COMPILEDATEHEURE_H_VERSION__ "1.0.2"
 #include <Arduino.h>
 
 // ----- Données de compilation -----
