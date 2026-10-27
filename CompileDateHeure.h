@@ -1,9 +1,9 @@
 // CompileDateHeure.h
-// Version : 1.1.0
+// Version : 1.1.1
 // Auteur  : FOURNET Olivier
 // Email   : olivier.fournet@free.fr
 // GitHub  : https://github.com/Fo170/CompileDateHeure
-// Date    : 2026-05-11
+// Date    : 2026-10-27
 //
 // Licence : GNU General Public License v3.0
 //
@@ -17,19 +17,40 @@
 //       initVersionCompilation(FORMAT_DATE_NUMERIQUE);
 //       Serial.println(s_versionCompilation);
 //   }
+//
+// v1.1.1 (27/10/2026) : garde d'inclusion renforcée.
+//   - #pragma once en plus du garde #ifndef COMPILE_DATE_HEURE_H
+//   - les variables de portée globale sont déclarées `inline` (C++17) : inclure
+//     ce header dans PLUSIEURS unités de compilation ne provoque plus d'erreur
+//     « multiple definition » à l'édition de liens. Avec un standard antérieur
+//     à C++17, la macro CDH_INLINE est vide et le comportement reste celui de
+//     la v1.1.0 (une seule unité de compilation doit inclure le header).
+
+#pragma once
 
 #ifndef COMPILE_DATE_HEURE_H
 #define COMPILE_DATE_HEURE_H
 
 
 // Version de la librairie (source UNIQUE — agrégée par liste_lib.h)
-#define __COMPILEDATEHEURE_H_VERSION__ "1.1.0"
+#define __COMPILEDATEHEURE_H_VERSION__ "1.1.1"
 #include <Arduino.h>
 #include <stdint.h>
 
+// ----- Liaison des variables de portée globale -----
+// En C++17, `inline` autorise une DÉFINITION dans le header sans provoquer de
+// « multiple definition » quand plusieurs unités de compilation l'incluent.
+// Avant C++17 la macro est vide : le header reste utilisable, mais une seule
+// unité de compilation doit l'inclure (comportement de la v1.1.0).
+#if __cplusplus >= 201703L
+  #define CDH_INLINE inline
+#else
+  #define CDH_INLINE
+#endif
+
 // ----- Données de compilation -----
-const char* COMPILE_DATE = __DATE__;  // Format : "Mmm dd yyyy" (ex: "May 10 2026")
-const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
+CDH_INLINE const char* COMPILE_DATE = __DATE__;  // Format : "Mmm dd yyyy" (ex: "May 10 2026")
+CDH_INLINE const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
 
 // ----- N° de version -----
 //#define COMPILE_DATE_HEURE_VERSION "1.0.1"
@@ -40,13 +61,13 @@ const char* COMPILE_TIME = __TIME__;  // Format : "hh:mm:ss"  (ex: "14:30:00")
 #define FORMAT_DATE_TEXTE_FR      2  // "dd/Mmm_fr/yyyy" (français)
 
 // ----- Noms des mois (index 0 = Jan) -----
-const char* MOIS_EN[12] = {"Jan","Feb","Mar","Apr","May","Jun",
-                            "Jul","Aug","Sep","Oct","Nov","Dec"};
-const char* MOIS_FR[12] = {"Jan","Fév","Mar","Avr","Mai","Jui",
-                            "Jui","Août","Sep","Oct","Nov","Déc"};
+CDH_INLINE const char* MOIS_EN[12] = {"Jan","Feb","Mar","Apr","May","Jun",
+                                      "Jul","Aug","Sep","Oct","Nov","Dec"};
+CDH_INLINE const char* MOIS_FR[12] = {"Jan","Fév","Mar","Avr","Mai","Jui",
+                                      "Jui","Août","Sep","Oct","Nov","Déc"};
 
 // ----- Chaîne de version globale -----
-String s_versionCompilation;
+CDH_INLINE String s_versionCompilation;
 
 // ----- Obtenir la date formatée -----
 // format : FORMAT_DATE_NUMERIQUE (0), FORMAT_DATE_TEXTE_EN (1), FORMAT_DATE_TEXTE_FR (2)
@@ -120,8 +141,8 @@ inline String initVersionCompilation(int format = FORMAT_DATE_NUMERIQUE) {
 #define NUM_VERSION_FORMAT_TEXTE 1  // chaîne "XX.YYY.ZZZZ"
 
 // ----- Chaînes/valeurs de NUM_VERSION (globales) -----
-uint32_t s_numVersion = 0;        // 0 = non initialisé
-String   s_numVersionTexte;       // vide = non initialisé
+CDH_INLINE uint32_t s_numVersion = 0;        // 0 = non initialisé
+CDH_INLINE String   s_numVersionTexte;       // vide = non initialisé
 
 // ----- Jours par mois (index 0 = Jan) -----
 const int JOURS_PAR_MOIS[12] = {31,28,31,30,31,30,31,31,30,31,30,31};

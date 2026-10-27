@@ -4,10 +4,10 @@
 [![Arduino IDE](https://img.shields.io/badge/Arduino-IDE-00979C?style=flat&logo=arduino)](https://docs.arduino.cc/software/ide/)
 [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-brightgreen.svg)](https://platformio.org/)
 [![PlatformIO](https://img.shields.io/badge/platformio-All_µC-violet?logo=platformio)](https://platformio.org/)
-[![Version](https://img.shields.io/badge/version-1.1.0-blue)](https://github.com/Fo170/CompileDateHeure)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue)](https://github.com/Fo170/CompileDateHeure)
 
 **Auteur :** FOURNET Olivier — olivier.fournet@free.fr  
-**Version :** 1.1.0  
+**Version :** 1.1.1  
 **Licence :** GNU General Public License v3.0
 
 ---
@@ -49,7 +49,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps =
-    https://github.com/Fo170/CompileDateHeure.git@^1.1.0
+    https://github.com/Fo170/CompileDateHeure.git@^1.1.1
 ```
 
 Ou dans un projet local, placez le dossier `CompileDateHeure/` dans `lib/`.
