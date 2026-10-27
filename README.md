@@ -4,10 +4,10 @@
 [![Arduino IDE](https://img.shields.io/badge/Arduino-IDE-00979C?style=flat&logo=arduino)](https://docs.arduino.cc/software/ide/)
 [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-brightgreen.svg)](https://platformio.org/)
 [![PlatformIO](https://img.shields.io/badge/platformio-All_µC-violet?logo=platformio)](https://platformio.org/)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/Fo170/CompileDateHeure)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](https://github.com/Fo170/CompileDateHeure)
 
 **Auteur :** FOURNET Olivier — olivier.fournet@free.fr  
-**Version :** 1.0.1  
+**Version :** 1.1.0  
 **Licence :** GNU General Public License v3.0
 
 ---
@@ -22,11 +22,12 @@ Fonctionne sur **ESP8266**, **ESP32** et toute carte compatible Arduino IDE ou P
 1. [Installation](#installation)
 2. [Utilisation rapide](#utilisation-rapide)
 3. [Fonctions de l'API](#fonctions-de-lapi)
-4. [Constantes de format](#constantes-de-format)
-5. [Exemple complet](#exemple-complet)
-6. [Architecture](#architecture)
-7. [Compatibilité](#compatibilité)
-8. [License](#license)
+4. [NUM_VERSION](#num_version)
+5. [Constantes de format](#constantes-de-format)
+6. [Exemple complet](#exemple-complet)
+7. [Architecture](#architecture)
+8. [Compatibilité](#compatibilité)
+9. [License](#license)
 
 ---
 
@@ -48,7 +49,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps =
-    https://github.com/Fo170/CompileDateHeure.git@^1.0.1
+    https://github.com/Fo170/CompileDateHeure.git@^1.1.0
 ```
 
 Ou dans un projet local, placez le dossier `CompileDateHeure/` dans `lib/`.
@@ -96,6 +97,74 @@ Serial.println(s_versionCompilation);
 
 ---
 
+## NUM_VERSION
+
+Identifiant **numérique** du build, dérivé de la date et de l'heure de compilation.
+Encodage `X.Y.Z` compacté dans un seul entier `uint32_t` :
+
+```
+NUM_VERSION = X * 10^7 + Y * 10^4 + Z
+```
+
+| Champ | Signification | Plage | Chiffres |
+|---|---|---|---|
+| `X` | année de compilation − 2020 | 0..429 (2020..2449) | 2 |
+| `Y` | numéro du jour dans l'année | 1..366 | 3 |
+| `Z` | minute du jour (`hh × 60 + mm`) | 0..1439 | 4 |
+
+### Fonctions
+
+| Fonction | Retour | Effet |
+|---|---|---|
+| `getNumVersion()` | `uint32_t` | Calcule, ne touche pas les globales |
+| `getNumVersionTexte()` | `String` | Calcule, ne touche pas les globales |
+| `initNumVersion()` | `uint32_t` | Remplit les deux globales et retourne la valeur |
+
+### Variables globales
+
+| Variable | Type | Contenu |
+|---|---|---|
+| `s_numVersion` | `uint32_t` | `63001093` — pour les comparaisons numériques |
+| `s_numVersionTexte` | `String` | `"06.300.1093"` — pour l'affichage |
+
+### Exemples de valeurs
+
+| Date de compilation | `s_numVersion` | `s_numVersionTexte` |
+|---|---|---|
+| 01/01/2020 00:00 | `10000` | `00.001.0000` |
+| 29/02/2024 12:00 | `40600720` | `04.060.0720` |
+| 27/10/2026 18:13 | `63001093` | `06.300.1093` |
+| 31/12/2026 23:59 | `63651439` | `06.365.1439` |
+| 01/01/2030 00:00 | `100010000` | `10.001.0000` |
+
+### Utilisation
+
+```cpp
+#include <CompileDateHeure.h>
+
+void setup() {
+    Serial.begin(9600);
+
+    initNumVersion();
+    Serial.println(s_numVersion);       // 63001093
+    Serial.println(s_numVersionTexte);  // 06.300.1093
+
+    // Comparaison numérique : ce build est-il plus récent qu'un seuil ?
+    if (s_numVersion > 63000000UL) {
+        Serial.println("Build posterieur au 27/10/2026 00:00");
+    }
+}
+```
+
+### Limites à connaître
+
+- **Granularité : la minute.** Deux compilations dans la même minute produisent la même valeur. Les secondes sont **tronquées**, jamais arrondies.
+- **Base 2020.** Une date de compilation antérieure au 1er janvier 2020 renvoie `0` et une chaîne vide — jamais de bouclage `uint32_t`.
+- **Heure locale du poste de build.** `__DATE__` / `__TIME__` ne sont pas en UTC : deux machines dans des fuseaux différents produisent des valeurs différentes pour le même commit.
+- La constante `NUM_VERSION_ANNEE_BASE` (2020) est exposée dans l'en-tête.
+
+---
+
 ## Constantes de format
 
 | Constante | Valeur | Description |
@@ -127,6 +196,13 @@ void setup() {
     // Format texte français
     Serial.print("FR : ");
     Serial.println(getBuildDate(FORMAT_DATE_TEXTE_FR));
+
+    // Identifiant numérique de build
+    initNumVersion();
+    Serial.print("NUM_VERSION : ");
+    Serial.println(s_numVersion);
+    Serial.print("NUM_VERSION : ");
+    Serial.println(s_numVersionTexte);
 }
 
 void loop() {
@@ -167,4 +243,4 @@ Voir le fichier [LICENSE](LICENSE) pour les détails complets.
 
 ---
 
-*Dernière mise à jour : 2026-05-11*
+*Dernière mise à jour : 2026-10-27*

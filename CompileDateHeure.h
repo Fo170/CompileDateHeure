@@ -1,5 +1,5 @@
 // CompileDateHeure.h
-// Version : 1.0.1
+// Version : 1.1.0
 // Auteur  : FOURNET Olivier
 // Email   : olivier.fournet@free.fr
 // GitHub  : https://github.com/Fo170/CompileDateHeure
@@ -23,8 +23,9 @@
 
 
 // Version de la librairie (source UNIQUE — agrégée par liste_lib.h)
-#define __COMPILEDATEHEURE_H_VERSION__ "1.0.2"
+#define __COMPILEDATEHEURE_H_VERSION__ "1.1.0"
 #include <Arduino.h>
+#include <stdint.h>
 
 // ----- Données de compilation -----
 const char* COMPILE_DATE = __DATE__;  // Format : "Mmm dd yyyy" (ex: "May 10 2026")
@@ -101,5 +102,109 @@ inline String initVersionCompilation(int format = FORMAT_DATE_NUMERIQUE) {
 // Fonction supprimée à partir de la v1.0.1 — utiliser :
 //   initVersionCompilation(FORMAT_DATE_NUMERIQUE);
 //   Serial.println(s_versionCompilation);
+
+// ----- NUM_VERSION : identifiant numérique de build -----
+// Encodage  X.Y.Z  ->  X * 10^7 + Y * 10^4 + Z
+//   X = année de compilation - NUM_VERSION_ANNEE_BASE   (0..429  -> 2020..2449)
+//   Y = numéro du jour dans l'année                     (1..366)
+//   Z = minute du jour                                  (0..1439)
+// Exemple pour un build du 27/10/2026 à 18:13 :
+//   X=6, Y=300, Z=1093  ->  s_numVersion = 63001093, s_numVersionTexte = "06.300.1093"
+//
+// Granularité : la minute. Deux compilations dans la même minute donnent la même valeur.
+// Les secondes sont tronquées, jamais arrondies.
+// Une date de compilation antérieure à NUM_VERSION_ANNEE_BASE donne 0.
+
+#define NUM_VERSION_ANNEE_BASE   2020
+#define NUM_VERSION_FORMAT_NUM   0  // valeur uint32_t
+#define NUM_VERSION_FORMAT_TEXTE 1  // chaîne "XX.YYY.ZZZZ"
+
+// ----- Chaînes/valeurs de NUM_VERSION (globales) -----
+uint32_t s_numVersion = 0;        // 0 = non initialisé
+String   s_numVersionTexte;       // vide = non initialisé
+
+// ----- Jours par mois (index 0 = Jan) -----
+const int JOURS_PAR_MOIS[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+// ----- Année bissextile (calendrier grégorien) -----
+inline bool numVersionEstBissextile(int annee) {
+    return (annee % 4 == 0 && annee % 100 != 0) || (annee % 400 == 0);
+}
+
+// ----- Décomposer la date/heure de compilation en (année, jour de l'année, minute du jour) -----
+// Retourne false si l'année de compilation précède NUM_VERSION_ANNEE_BASE.
+inline bool numVersionComposants(int &annee, int &jourAnnee, int &minuteJour) {
+    // Extraction du jour (position 4, 1 ou 2 chiffres)
+    int day = (COMPILE_DATE[4] == ' ')
+              ? (COMPILE_DATE[5] - '0')
+              : ((COMPILE_DATE[4] - '0') * 10 + (COMPILE_DATE[5] - '0'));
+
+    // Recherche du mois par les 3 premiers caractères
+    int monthIdx = 0;
+    for (int i = 0; i < 12; i++) {
+        if (COMPILE_DATE[0] == MOIS_EN[i][0] &&
+            COMPILE_DATE[1] == MOIS_EN[i][1] &&
+            COMPILE_DATE[2] == MOIS_EN[i][2]) {
+            monthIdx = i;
+            break;
+        }
+    }
+
+    // Extraction de l'année (position 7-10)
+    int year = (COMPILE_DATE[7] - '0') * 1000
+             + (COMPILE_DATE[8] - '0') * 100
+             + (COMPILE_DATE[9] - '0') * 10
+             + (COMPILE_DATE[10] - '0');
+
+    if (year < NUM_VERSION_ANNEE_BASE) {
+        annee = 0; jourAnnee = 0; minuteJour = 0;
+        return false;
+    }
+
+    // Numéro du jour dans l'année : somme des mois précédents + jour courant
+    int doy = day;
+    for (int m = 1; m <= monthIdx; m++) {
+        doy += JOURS_PAR_MOIS[m - 1];
+        if (m == 2 && numVersionEstBissextile(year)) doy += 1;
+    }
+
+    // Heure et minute depuis COMPILE_TIME ("hh:mm:ss")
+    int hh = (COMPILE_TIME[0] - '0') * 10 + (COMPILE_TIME[1] - '0');
+    int mn = (COMPILE_TIME[3] - '0') * 10 + (COMPILE_TIME[4] - '0');
+
+    annee      = year - NUM_VERSION_ANNEE_BASE;
+    jourAnnee  = doy;
+    minuteJour = hh * 60 + mn;
+    return true;
+}
+
+// ----- Obtenir NUM_VERSION sous forme numérique (ne touche pas les globales) -----
+inline uint32_t getNumVersion() {
+    int annee, jourAnnee, minuteJour;
+    if (!numVersionComposants(annee, jourAnnee, minuteJour)) return 0UL;
+    return (uint32_t)annee * 10000000UL
+         + (uint32_t)jourAnnee * 10000UL
+         + (uint32_t)minuteJour;
+}
+
+// ----- Obtenir NUM_VERSION sous forme texte "XX.YYY.ZZZZ" (ne touche pas les globales) -----
+inline String getNumVersionTexte() {
+    int annee, jourAnnee, minuteJour;
+    if (!numVersionComposants(annee, jourAnnee, minuteJour)) return String("");
+
+    char buf[16];
+    snprintf(buf, sizeof(buf), "%02lu.%03lu.%04lu",
+             (unsigned long)annee,
+             (unsigned long)jourAnnee,
+             (unsigned long)minuteJour);
+    return String(buf);
+}
+
+// ----- Initialiser NUM_VERSION (numérique + texte) et retourner la valeur numérique -----
+inline uint32_t initNumVersion() {
+    s_numVersion      = getNumVersion();
+    s_numVersionTexte = getNumVersionTexte();
+    return s_numVersion;
+}
 
 #endif // COMPILE_DATE_HEURE_H
